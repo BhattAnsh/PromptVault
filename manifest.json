@@ -1,0 +1,52 @@
+{
+  "manifest_version": 3,
+  "name": "PromptVault",
+  "description": "Scrape and organize chats from different AI platforms",
+  "version": "1.0",
+  "action": {
+    "default_popup": "src/popup/popup.html",
+    "default_icon": {
+      "16": "assets/icons/icon-16.png",
+      "32": "assets/icons/icon-32.png",
+      "48": "assets/icons/icon-48.png",
+      "128": "assets/icons/icon-128.png"
+    }
+  },
+  "icons": {
+    "16": "assets/icons/icon-16.png",
+    "32": "assets/icons/icon-32.png",
+    "48": "assets/icons/icon-48.png",
+    "128": "assets/icons/icon-128.png"
+  },
+  "background": {
+    "service_worker": "src/background/background.js"
+  },
+  "options_page": "src/pages/options.html",
+  "content_scripts": [
+    {
+      "matches": [
+        "https://chat.openai.com/*",
+        "https://chatgpt.com/*",
+        "https://claude.ai/*",
+        "https://grok.x.ai/*",
+        "https://*.x.ai/grok/*",
+        "https://grok.com/*",
+        "https://gemini.google.com/*",
+        "https://bard.google.com/*"
+      ],
+      "js": ["src/content/content.js"]
+    }
+  ],
+  "permissions": ["storage", "activeTab", "scripting", "tabs", "notifications"],
+  "host_permissions": [
+    "https://chat.openai.com/*",
+    "https://chatgpt.com/*",
+    "https://claude.ai/*",
+    "https://grok.x.ai/*",
+    "https://*.x.ai/grok/*",
+    "https://grok.com/*",
+    "https://gemini.google.com/*",
+    "https://bard.google.com/*"
+  ],
+  "web_accessible_resources": []
+}

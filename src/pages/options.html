@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>PromptVault Options</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      max-width: 800px;
+      margin: 0 auto;
+      padding: 20px;
+      color: #333;
+    }
+    h1 {
+      color: #4285F4;
+      border-bottom: 1px solid #eee;
+      padding-bottom: 10px;
+    }
+    .option-group {
+      margin-bottom: 20px;
+      padding: 15px;
+      border: 1px solid #eee;
+      border-radius: 4px;
+    }
+    .option-title {
+      font-weight: bold;
+      margin-bottom: 10px;
+    }
+    label {
+      display: block;
+      margin: 10px 0;
+    }
+    input[type="checkbox"] {
+      margin-right: 10px;
+    }
+    button {
+      padding: 8px 16px;
+      background-color: #4285F4;
+      color: white;
+      border: none;
+      border-radius: 4px;
+      cursor: pointer;
+      font-size: 14px;
+      margin-top: 15px;
+    }
+    button:hover {
+      background-color: #3b78e7;
+    }
+    .status {
+      margin-top: 15px;
+      padding: 10px;
+      border-radius: 4px;
+      display: none;
+    }
+    .success {
+      background-color: #e6f4ea;
+      color: #137333;
+    }
+  </style>
+</head>
+<body>
+  <h1>PromptVault Settings</h1>
+  
+  <div class="option-group">
+    <div class="option-title">General Settings</div>
+    <label>
+      <input type="checkbox" id="autoSave">
+      Automatically save chats (when implemented)
+    </label>
+    <label>
+      <input type="checkbox" id="savePlatformInfo">
+      Include platform information with saved chats
+    </label>
+  </div>
+  
+  <div class="option-group">
+    <div class="option-title">Platforms</div>
+    <label>
+      <input type="checkbox" id="enableChatGPT" checked>
+      Enable for ChatGPT
+    </label>
+    <label>
+      <input type="checkbox" id="enableClaude" checked>
+      Enable for Claude
+    </label>
+    <label>
+      <input type="checkbox" id="enableGrok" checked>
+      Enable for Grok
+    </label>
+    <label>
+      <input type="checkbox" id="enableGemini" checked>
+      Enable for Gemini
+    </label>
+  </div>
+  
+  <div class="option-group">
+    <div class="option-title">Storage</div>
+    <button id="clearAllData">Clear All Saved Chats</button>
+  </div>
+  
+  <button id="saveOptions">Save Options</button>
+  
+  <div id="status" class="status"></div>
+  
+  <script src="options.js"></script>
+</body>
+</html>

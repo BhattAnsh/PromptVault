@@ -1,0 +1,272 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>PromptVault - Chat Detail</title>
+  <style>
+    :root {
+      --background-color: #ffffff;
+      --text-color: #333333;
+      --primary-color: #4285F4;
+      --secondary-color: #f1f3f4;
+      --danger-color: #ea4335;
+      --user-message-bg: #E8F0FE;
+      --ai-message-bg: #f5f5f5;
+      --metadata-bg: #f5f5f5;
+      --border-color: #eee;
+    }
+
+    [data-theme="dark"] {
+      --background-color: #202124;
+      --text-color: #e8eaed;
+      --primary-color: #669df6;
+      --secondary-color: #3c4043;
+      --danger-color: #f28b82;
+      --user-message-bg: #1a73e8;
+      --ai-message-bg: #3c4043;
+      --metadata-bg: #303134;
+      --border-color: #5f6368;
+    }
+
+    body {
+      font-family: Arial, sans-serif;
+      max-width: 800px;
+      margin: 0 auto;
+      padding: 20px;
+      color: var(--text-color);
+      line-height: 1.6;
+      background-color: var(--background-color);
+      transition: all 0.3s ease;
+    }
+    h1 {
+      color: var(--primary-color);
+      border-bottom: 1px solid var(--border-color);
+      padding-bottom: 10px;
+    }
+    .metadata {
+      background-color: var(--metadata-bg);
+      padding: 15px;
+      border-radius: 4px;
+      margin-bottom: 20px;
+    }
+    .metadata-item {
+      margin-bottom: 5px;
+    }
+    .metadata-label {
+      font-weight: bold;
+      color: var(--text-color);
+      opacity: 0.8;
+    }
+    .actions {
+      display: flex;
+      gap: 10px;
+      margin: 20px 0;
+    }
+    .action-button {
+      padding: 8px 16px;
+      border-radius: 4px;
+      border: none;
+      cursor: pointer;
+      font-size: 14px;
+    }
+    .primary {
+      background-color: var(--primary-color);
+      color: white;
+    }
+    .secondary {
+      background-color: var(--secondary-color);
+      color: var(--text-color);
+    }
+    .danger {
+      background-color: var(--danger-color);
+      color: white;
+    }
+    .conversation {
+      margin-top: 20px;
+    }
+    .message {
+      padding: 15px;
+      margin-bottom: 15px;
+      border-radius: 4px;
+      position: relative;
+    }
+    .user-message {
+      background-color: var(--user-message-bg);
+      margin-left: 50px;
+      margin-right: 0;
+    }
+    .ai-message {
+      background-color: var(--ai-message-bg);
+      margin-right: 50px;
+      margin-left: 0;
+    }
+    .message-header {
+      font-weight: bold;
+      margin-bottom: 5px;
+      color: var(--text-color);
+    }
+    .user-message .message-header {
+      color: white;
+    }
+    .no-messages {
+      text-align: center;
+      padding: 40px;
+      color: var(--text-color);
+      opacity: 0.5;
+      font-style: italic;
+    }
+    
+    /* Dropdown styles */
+    .dropdown {
+      position: relative;
+      display: inline-block;
+    }
+    
+    .dropdown-content {
+      display: none;
+      position: absolute;
+      background-color: var(--background-color);
+      min-width: 160px;
+      box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+      z-index: 1;
+      border-radius: 4px;
+      overflow: hidden;
+    }
+    
+    .dropdown-content a {
+      color: var(--text-color);
+      padding: 12px 16px;
+      text-decoration: none;
+      display: block;
+      transition: background-color 0.2s;
+    }
+    
+    .dropdown-content a:hover {
+      background-color: var(--secondary-color);
+    }
+    
+    .dropdown:hover .dropdown-content {
+      display: block;
+    }
+    
+    /* Tags styles */
+    .tags-container {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+      margin: 10px 0;
+    }
+    
+    .tag {
+      background-color: var(--secondary-color);
+      color: var(--text-color);
+      padding: 4px 10px;
+      border-radius: 16px;
+      font-size: 12px;
+      display: flex;
+      align-items: center;
+    }
+    
+    .tag .remove-tag {
+      margin-left: 6px;
+      cursor: pointer;
+      font-weight: bold;
+    }
+
+    /* Dark mode toggle */
+    .theme-toggle {
+      position: absolute;
+      top: 20px;
+      right: 20px;
+    }
+
+    .theme-toggle button {
+      background: none;
+      border: none;
+      font-size: 24px;
+      cursor: pointer;
+      color: var(--text-color);
+    }
+    
+    /* Icon styles */
+    .action-button span {
+      display: inline-flex;
+      align-items: center;
+      margin-right: 6px;
+    }
+    
+    .export-option-icon {
+      display: inline-flex;
+      align-items: center;
+      margin-right: 8px;
+      width: 16px;
+    }
+  </style>
+</head>
+<body>
+  <div class="theme-toggle">
+    <button id="theme-toggle-btn"></button>
+  </div>
+  
+  <h1>Chat Detail</h1>
+  
+  <div class="metadata" id="metadata">
+    <!-- Metadata will be dynamically loaded here -->
+  </div>
+  
+  <div id="tags-section">
+    <h3>Tags</h3>
+    <div class="tags-container" id="tags-container">
+      <!-- Tags will be added here -->
+    </div>
+  </div>
+  
+  <div class="actions">
+    <button id="back-button" class="action-button secondary">
+      <span id="back-icon"></span>
+      Back to Chat List
+    </button>
+    <div class="dropdown">
+      <button id="export-button" class="action-button primary">
+        <span id="export-single-icon"></span>
+        Export Chat ▼
+      </button>
+      <div class="dropdown-content" id="export-options">
+        <a href="#" id="export-json">
+          <span class="export-option-icon" data-format="json"></span>
+          JSON Format
+        </a>
+        <a href="#" id="export-markdown">
+          <span class="export-option-icon" data-format="markdown"></span>
+          Markdown Format
+        </a>
+        <a href="#" id="export-text">
+          <span class="export-option-icon" data-format="text"></span>
+          Plain Text Format
+        </a>
+        <a href="#" id="export-html">
+          <span class="export-option-icon" data-format="html"></span>
+          HTML Format
+        </a>
+      </div>
+    </div>
+    <button id="delete-button" class="action-button danger">
+      <span id="delete-single-icon"></span>
+      Delete Chat
+    </button>
+    <button id="tag-button" class="action-button secondary">
+      <span id="tag-icon"></span>
+      Add Tags
+    </button>
+  </div>
+  
+  <div class="conversation" id="conversation">
+    <div class="no-messages">
+      Loading chat messages...
+    </div>
+    <!-- Chat messages will be dynamically loaded here -->
+  </div>
+  
+  <script src="../utils/icons.js"></script>
+  <script src="chat-detail.js"></script>
+</body>
+</html>

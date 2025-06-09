@@ -1,0 +1,148 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="popup.css">
+    <script src="../utils/icons.js"></script>
+</head>
+
+<body>
+    <div class="popup-container" data-theme="light">
+        <!-- Header with branding and theme toggle -->
+        <header class="popup-header">
+            <div class="brand">
+                <div class="brand-icon">
+                    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <path d="M12 2L13.09 8.26L19 7L18.74 13.74L21 19L14.74 19.26L13 21L11.26 14.74L5 15L5.26 8.26L3 3L9.26 2.74L12 2Z" fill="currentColor"/>
+                    </svg>
+                </div>
+                <div class="brand-text">
+                    <h1>PromptVault</h1>
+                    <p>AI Chat Organizer</p>
+                </div>
+            </div>
+            <button class="theme-toggle" id="theme-toggle" aria-label="Toggle theme">
+                <span class="theme-icon"></span>
+            </button>
+        </header>
+
+        <!-- Status Section -->
+        <section class="status-section">
+            <div class="status-card" id="status-card">
+                <div class="status-icon"></div>
+                <div class="status-text" id="status-text">Extension Ready</div>
+            </div>
+        </section>
+
+        <!-- Session Management -->
+        <section class="session-section">
+            <div class="section-header">
+                <h2>Session</h2>
+                <div class="session-indicator" id="session-indicator"></div>
+            </div>
+            <div class="session-card" id="session-card">
+                <div class="session-info">
+                    <div class="session-name" id="session-name">No active session</div>
+                    <div class="session-meta" id="session-meta">Create a session to organize your chats</div>
+                </div>
+                <div class="session-actions">
+                    <button class="action-btn primary" id="create-session" aria-label="Create session">
+                        <span class="btn-icon"></span>
+                        <span class="btn-text">Create</span>
+                    </button>
+                    <button class="action-btn danger" id="close-session" disabled aria-label="Close session">
+                        <span class="btn-icon"></span>
+                        <span class="btn-text">Close</span>
+                    </button>
+                </div>
+            </div>
+        </section>
+
+        <!-- Platform Status -->
+        <section class="platform-section">
+            <div class="section-header">
+                <h2>Platform Status</h2>
+            </div>
+            <div class="platform-grid">
+                <div class="platform-item" data-platform="chatgpt">
+                    <div class="platform-info">
+                        <div class="platform-icon">
+                            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                <circle cx="12" cy="12" r="9" stroke="currentColor" stroke-width="2"/>
+                                <path d="M8 12l3 3 5-6" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                            </svg>
+                        </div>
+                        <span class="platform-name">ChatGPT</span>
+                    </div>
+                    <div class="platform-status" id="chatgpt-status"></div>
+                </div>
+                <div class="platform-item" data-platform="claude">
+                    <div class="platform-info">
+                        <div class="platform-icon">
+                            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                <rect x="3" y="3" width="18" height="18" rx="2" stroke="currentColor" stroke-width="2"/>
+                                <circle cx="12" cy="12" r="3" stroke="currentColor" stroke-width="2"/>
+                            </svg>
+                        </div>
+                        <span class="platform-name">Claude</span>
+                    </div>
+                    <div class="platform-status" id="claude-status"></div>
+                </div>
+                <div class="platform-item" data-platform="grok">
+                    <div class="platform-info">
+                        <div class="platform-icon">
+                            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                <path d="M13 2L3 14h9l-1 8 10-12h-9l1-8z" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                            </svg>
+                        </div>
+                        <span class="platform-name">Grok</span>
+                    </div>
+                    <div class="platform-status" id="grok-status"></div>
+                </div>
+                <div class="platform-item" data-platform="gemini">
+                    <div class="platform-info">
+                        <div class="platform-icon">
+                            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                <polygon points="12,2 15.09,8.26 22,9 17,14.14 18.18,21.02 12,17.77 5.82,21.02 7,14.14 2,9 8.91,8.26 12,2" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                            </svg>
+                        </div>
+                        <span class="platform-name">Gemini</span>
+                    </div>
+                    <div class="platform-status" id="gemini-status"></div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Stats Section -->
+        <section class="stats-section">
+            <div class="section-header">
+                <h2>Saved Chats</h2>
+            </div>
+            <div class="stats-grid">
+                <div class="stat-card">
+                    <div class="stat-value" id="session-count">0</div>
+                    <div class="stat-label">Sessions</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-value" id="random-count">0</div>
+                    <div class="stat-label">Random</div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Actions -->
+        <section class="actions-section">
+            <button class="primary-action" id="view-chats">
+                <span class="action-icon"></span>
+                <span class="action-text">View All Chats</span>
+                <span class="action-arrow"></span>
+            </button>
+        </section>
+    </div>
+
+    <script src="popup.js"></script>
+</body>
+
+</html>
